@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Style content CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script>
+        function search() {
+          // Declare variables
+          var input, filter, table, tr, td, i, j, txtValue, cells;
+          input = document.getElementById("input")
+          filter = input.value.toLowerCase();
+          table = document.getElementById("usersTable");
+          tbody = table.getElementsByTagName("tbody");
+          tr = table.getElementsByTagName("tr");
+
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 0; i < tr.length; i++) {
+            cells = tr[i].getElementsByTagName("td");
+            for (j = 0; j < cells.length; j++) {
+                if (j == 0) {
+                    txtValue = cells[j].innerText;
+                }
+                if (txtValue.toLowerCase().indexOf(filter) == -1) {
+                    tr[i].style.display = "none";
+                    break;
+                } else {
+                    tr[i].style.display = "";
+                    break;
+                }
+            }
+          }
+        }
+    </script>
+    <!-- Font -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <!-- Local stylesheet elements -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='members.css') }}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static',filename='images/favicon.png') }}"/>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <a class="navbar-brand" href="{{url_for('index')}}">CongressCentral</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('index')}}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('members')}}">Members</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('committees')}}">Committees</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('legislation')}}">Legislation</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('about')}}">About</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="{{url_for('index')}}" method="POST">
+              <input type="search" id="input" class="form-control mr-sm-2" placeholder="Search" name="user_input">
+              <input type="submit" id="searchbuttonid" class="btn btn-outline-success my-2 my-sm-0" value="Search" name="action"></input>
+            </form>
+        </div>
+    </nav>
+
+    <!-- DESCRIPTION -->
+    <div class="header">
+        <h1>Members</h1>
+        <p>Find yours or any member within the current United States Senate</p>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        <form action="{{url_for('members')}}" method="POST">
+            <div class="form-row">
+                <div class="col-12 col-md-9 mb-2 mb-md-0" class="form-row">
+                    <input type="search" id="input" class="form-control form-control-lg" placeholder="Find a member..." name="user_input">
+                </div>
+                <div class="col-12 col-md-3">
+                    <input type="submit" id="searchbuttonid" class="btn btn-block btn-lg btn-primary" value="Search" name="action"></input>
+                </div>
+            </div>
+        </form>
+        <br/>
+    </div>
+
+    <div class="container table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+        <table id="usersTable" class="table table-light table-md table-hover w3-table-all">
+            <thead class="thead-dark">
+                <tr>
+                    <th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(1)')">Name <img src="{{ url_for('static',filename='images/updown.png') }}" class="img-arrow"></th>
+                    <th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(2)')">State Rank <img src="{{ url_for('static',filename='images/updown.png') }}" class="img-arrow"></th>
+                    <th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(3)')">Party <img src="{{ url_for('static',filename='images/updown.png') }}" class="img-arrow"></th>
+                    <th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(4)')">State <img src="{{ url_for('static',filename='images/updown.png') }}" class="img-arrow"></th>
+                    <th onclick="w3.sortHTML('#usersTable', '.item', 'td:nth-child(5)')">Votes With Party % <img src="{{ url_for('static',filename='images/updown.png') }}" class="img-arrow"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in member.items %}
+                    <tr class="item">
+                        <td>
+                            <a href="{{url_for('individual_member', member_id=i.id)}}" id="name" class="text-name">Senator {{i.lname}}{{ i.namesuffix if i.namesuffix is not none else ''}}, {{i.fname}} {{ i.mname if i.mname is not none else '' }}<br></a><img src="{{ url_for('static',filename='images/democratic.png') if i.party == 'D' else url_for('static',filename='images/independent.png') if i.party == 'ID' else url_for('static',filename='images/republican.png')}}" width="70" height="61" class="img-flag"/>
+                        </td>
+                        <td>
+                            <p class="text-muted">{{'Junior' if i.state_rank == 'junior' else 'Senior'}}</p>
+                        </td>
+                        <td>
+                            <p class="text-muted">{{'Democratic' if i.party == 'D' else 'Independent' if i.party == 'ID' else 'Republican'}}</p>
+                        </td>
+                        <td>
+                            <p class="text-state">{{i.state}}</p>
+                        </td>
+                        <td>
+                            <p class="text-twitter">{{i.votes_w_party}}%</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PAGINATION BAR -->
+    <div class="d-flex justify-content-center">
+        <div class="col-12">
+            <div class="text-right">
+                <ul class="pagination pagination-split mt-5 float-right">
+                    <li class="page-item">
+
+                        {% if member.has_prev %}
+                            <a href="{{ url_for('members', page=member.prev_num) }}" class="btn btn-light {% if member.page == 1 %}disabled{% endif %}">
+                              <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        {% endif %}
+
+                        {% for page in member.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+
+                            {% if page %}
+                              {% if page != member.page %}
+                                <a href="{{ url_for('members', page=page) }}" class="btn btn-light">{{ page }}</a>
+                              {% else %}
+                                <strong class="btn btn-light">{{ page }}</strong>
+                              {% endif %}
+                            {% else %}
+                              <span class=ellipsis>…</span>
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% if member.has_next %}
+                            <a href="{{ url_for('members', page=member.next_num) }}" class="btn btn-light {% if member.has_next and member.page == member.pages %}disabled{% endif %}">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        {% endif %}
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-light text-center align-middle">
+    <div class="row">
+      <p class="col">Last Edited: <script>document.write(document.lastModified);</script></p>
+      <p class="col">Created by Andrew Kim, Alina Mawji, Michael DiLeo, and Robert Everson</p>
+      <p class="col"><a href="https://gitlab.com/alinamawji/cs331e-idb" target="_blank" style="text-decoration: underline">GitLab Repository</a></p>
+    </div>
+  </footer>
+</body>
+</html>

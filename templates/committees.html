@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Style content CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Font -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+
+    <!-- Local stylesheet elements -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='committees.css') }}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static',filename='images/favicon.png') }}"/>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+    <nav class="navbar navbar-expand-md navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <a class="navbar-brand" href="{{url_for('index')}}">CongressCentral</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('index')}}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('members')}}">Members</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('committees')}}">Committees</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('legislation')}}">Legislation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('about')}}">About</a>
+            </li>
+          </ul>
+            <form class="form-inline my-2 my-lg-0" action="{{url_for('index')}}" method="POST">
+              <input type="search" id="input" class="form-control mr-sm-2" placeholder="Search" name="user_input">
+              <input type="submit" id="searchbuttonid" class="btn btn-outline-success my-2 my-sm-0" value="Search" name="action"></input>
+            </form>
+        </div>
+    </nav>
+
+<!-- HEADER -->
+    <div class="header">
+        <h1>Committees</h1>
+        <p>Search committees where senators debate and ammend legislation</p>
+    </div>
+
+<!-- SEARCH BAR -->
+    <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        <form action="{{url_for('committees')}}" method="POST">
+            <div class="form-row">
+                <div class="col-12 col-md-9 mb-2 mb-md-0" class="form-row">
+                    <input type="search" id="input" class="form-control form-control-lg" placeholder="Find committees..." name="user_input">
+                </div>
+                <div class="col-12 col-md-3">
+                    <input type="submit" id="searchbuttonid" class="btn btn-block btn-lg btn-primary" value="Search" name="action"></input>
+                </div>
+            </div>
+        </form>
+        <br/>
+    </div>
+
+<!-- SORTING -->
+  <div class="row justify-content-center mb-4">
+    <div class="dropdown">
+      <button class="btn btn-secondary mr-3 dropdown-toggle" type="button" style="float: right;" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort By</button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="dropdown-item" id="titleSortA">Title A-Z</button>
+        <button class="dropdown-item" id="titleSortD">Title Z-A</button>
+        <button class="dropdown-item" id="chairSortA">Chair A-Z</button>
+        <button class="dropdown-item" id="chairSortD">Chair Z-A</button>
+        <button class="dropdown-item" id="rankingSortA">Ranking A-Z</button>
+        <button class="dropdown-item" id="rankingSortD">Ranking Z-A</button>
+        <button class="dropdown-item" id="membersSortA">Members Low-High</button>
+        <button class="dropdown-item" id="membersSortD">Members High-Low</button>
+        <button class="dropdown-item" id="billsSortA">Bills Low-High</button>
+        <button class="dropdown-item" id="billsSortD">Bills High-Low</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById("titleSortA").addEventListener("click", sortTitleAsc)
+    function sortTitleAsc (){
+      $('.card-deck .card').sort(function(a,b) {
+          return $(a).find(".card-title").text().trim() > $(b).find(".card-title").text().trim() ? 1 : -1;
+      }).appendTo(".card-deck")};
+
+    document.getElementById("titleSortD").addEventListener("click", sortTitleDes)
+    function sortTitleDes (){
+      $('.card-deck .card').sort(function(a,b) {
+          return $(a).find(".card-title").text().trim() < $(b).find(".card-title").text().trim() ? 1 : -1;
+      }).appendTo(".card-deck")};
+
+
+    document.getElementById("chairSortA").addEventListener("click", sortChairAsc);
+    function sortChairAsc (){
+      $('.card-deck .card').sort(function(a,b) {
+          return $(a).find(".chair").text().trim() < $(b).find(".chair").text().trim() ? 1 : -1;
+      }).appendTo(".card-deck")};
+
+    document.getElementById("chairSortD").addEventListener("click", sortChairDes);
+    function sortChairDes (){
+      $('.card-deck .card').sort(function(a,b) {
+          return $(a).find(".chair").text().trim() > $(b).find(".chair").text().trim() ? 1 : -1;
+      }).appendTo(".card-deck")};
+
+
+    document.getElementById("rankingSortA").addEventListener("click", sortRankingAsc);
+    function sortRankingAsc (){
+      $('.card-deck .card').sort(function(a,b) {
+          return $(a).find(".ranking").text().trim() < $(b).find(".ranking").text().trim() ? 1 : -1;
+      }).appendTo(".card-deck")};
+
+    document.getElementById("rankingSortD").addEventListener("click", sortRankingDes);
+    function sortRankingDes (){
+      $('.card-deck .card').sort(function(a,b) {
+          return $(a).find(".ranking").text().trim() > $(b).find(".ranking").text().trim() ? 1 : -1;
+      }).appendTo(".card-deck")};
+
+
+    document.getElementById("membersSortA").addEventListener("click", sortMemsAsc);
+    function sortMemsAsc (){
+      $('.card-deck .card').sort(function(a,b) {
+          return parseInt($(a).find(".totalmems").text().trim()) > parseInt($(b).find(".totalmems").text().trim()) ? 1 : -1;
+      }).appendTo(".card-deck")};
+
+    document.getElementById("membersSortD").addEventListener("click", sortMemsDes);
+    function sortMemsDes (){
+      $('.card-deck .card').sort(function(a,b) {
+          return parseInt($(a).find(".totalmems").text().trim()) < parseInt($(b).find(".totalmems").text().trim()) ? 1 : -1;
+      }).appendTo(".card-deck")};
+
+
+    document.getElementById("billsSortA").addEventListener("click", sortBillsAsc);
+    function sortBillsAsc (){
+      $('.card-deck .card').sort(function(a,b) {
+          return parseInt($(a).find(".totbills").text().trim()) > parseInt($(b).find(".totbills").text().trim()) ? 1 : -1;
+      }).appendTo(".card-deck")};
+
+    document.getElementById("billsSortD").addEventListener("click", sortBillsDes);
+    function sortBillsDes (){
+      $('.card-deck .card').sort(function(a,b) {
+          return parseInt($(a).find(".totbills").text().trim()) < parseInt($(b).find(".totbills").text().trim()) ? 1 : -1;
+      }).appendTo(".card-deck")};
+  </script>
+
+<!-- CARDS -->
+  <div class="container-fluid justify-content-center">
+    <div class="card-deck">
+
+      {% for i in committee.items %}
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title"><a class="card-link" href="{{ url_for('individual_committee', committee_id=i.id) }}">{{i.name}}</a></h2>
+            <p>
+              <a href="{{url_for('individual_member', member_id=i.chair_id)}}" class="card-link chair">Chair:
+                {% set member_id = i.chair_id %}
+                {% for j in member %}
+                  {% if j.id == member_id %}
+                    Senator {{j.lname}}{{ ' '~j.namesuffix if j.namesuffix is not none else ''}}, {{j.fname}} {{ j.mname if j.mname is not none else '' }}
+                  {% endif %}
+                {% endfor %}</a>
+              <a href="{{url_for('individual_member', member_id=i.ranking_id)}}" class="card-link ranking">Ranking Member:
+                {% set member_id = i.ranking_id %}
+                {% for j in member %}
+                  {% if j.id == member_id %}
+                    Senator {{j.lname}}{{ ' '~j.namesuffix if j.namesuffix is not none else ''}}, {{j.fname}} {{ j.mname if j.mname is not none else '' }}
+                  {% endif %}
+                {% endfor %}</a>
+            </p>
+            <div class="row">
+            <div class="col-4">
+                <p class="card-text-att">Total Members: <br>
+                  <p class="date card-text totalmems">
+                    {% set count = namespace(value=0) %}
+                    {% for j in are_part_of %}
+                      {% if j.committee_id == i.id %}
+                        {% set count.value = count.value + 1 %}
+                      {% endif %}
+                    {% endfor %}
+                    {{ count.value }}
+                  </p>
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="card-text-att">Total Subcommittees: <br>
+                  <p class="date card-text">
+                    {% set count = namespace(value=0) %}
+                    {% for j in subcommittees %}
+                      {% if j.committee_id == i.id %}
+                        {% set count.value = count.value + 1 %}
+                      {% endif %}
+                    {% endfor %}
+                    {{ count.value }}
+                  </p>
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="card-text-att">Total Bills in Committee: <br>
+                  <p class="date card-text totbills">
+                    {% set count = namespace(value=0) %}
+                    {% for j in is_pushed_through %}
+                      {% if j.committee_id == i.id %}
+                        {% set count.value = count.value + 1 %}
+                      {% endif %}
+                    {% endfor %}
+                    {{ count.value }}
+                  </p>
+                </p>
+            </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{{i.website}}" class="card-link" target="_blank">Official Senate Site</a>
+        </div>
+      </div>
+
+      {% endfor %}
+
+    </div>
+  </div>
+
+<!-- PAGINATION BAR -->
+    <div class="d-flex justify-content-center">
+        <div class="col-12">
+            <div class="text-right">
+                <ul class="pagination pagination-split mt-5 float-right">
+                    <li class="page-item">
+
+                        {% if committee.has_prev %}
+                            <a href="{{ url_for('committees', page=committee.prev_num) }}" class="btn btn-light {% if committee.page == 1 %}disabled{% endif %}">
+                              <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        {% endif %}
+
+                        {% for page in committee.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+
+                            {% if page %}
+                              {% if page != committee.page %}
+                                <a href="{{ url_for('committees', page=page) }}" class="btn btn-light">{{ page }}</a>
+                              {% else %}
+                                <strong class="btn btn-light">{{ page }}</strong>
+                              {% endif %}
+                            {% else %}
+                              <span class=ellipsis>…</span>
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% if committee.has_next %}
+                            <a href="{{ url_for('committees', page=committee.next_num) }}" class="btn btn-light {% if committee.has_next and committee.page == committee.pages %}disabled{% endif %}">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        {% endif %}
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  <footer class="bg-light text-center align-middle">
+    <div class="row">
+      <p class="col">Last Edited: <script>document.write(document.lastModified);</script></p>
+      <p class="col">Created by Andrew Kim, Alina Mawji, Michael DiLeo, and Robert Everson</p>
+      <p class="col"><a href="https://gitlab.com/alinamawji/cs331e-idb" target="_blank" style="text-decoration: underline">GitLab Repository</a></p>
+    </div>
+  </footer>
+</body>
+</html>

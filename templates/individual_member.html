@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Style content CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Font for icons like check mark -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <!-- Local stylesheet elements -->
+  <link rel="stylesheet" href="{{ url_for('static',filename='profile.css') }}">
+
+  <!-- favicon -->
+  <link rel="shortcut icon" type="image/png" href="{{ url_for('static',filename='images/favicon.png') }}"/>
+
+  <!-- Bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-md navbar-toggleable-sm navbar-light bg-light static-top">
+        <a class="navbar-brand" href="{{url_for('index')}}">CongressCentral</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('index')}}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('members')}}">Members</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('committees')}}">Committees</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('legislation')}}">Legislation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('about')}}">About</a>
+            </li>
+          </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0 disabled" type="submit">Search</button>
+            </form>
+        </div>
+</nav>
+
+<div class="container bootdey flex-grow-1 container-p-y">
+  {% for i in member %}
+    {% if i.id == member_id %}
+      <div class="media align-items-center py-3 mb-3 mt-3 bg-white">
+        <!-- <img src="../static/images/{{i.member_id}}.jpg" alt="" class="d-block ui-w-100 rounded-circle"> -->
+        <div class="media-body text-center">
+          <img src="{{ url_for('static',filename='images/democratic.png') if i.party == 'D' else url_for('static',filename='images/independent.png') if i.party == 'ID' else url_for('static',filename='images/republican.png')}}" width="70" height="61" class="mb-2" />
+          <h4 class="font-weight-bold mb-0">Senator {{i.lname}}{{ ' '~i.namesuffix if i.namesuffix is not none else ''}}, {{i.fname}} {{ i.mname if i.mname is not none else '' }}
+    {% for j in twitter %}
+      {% if j.member_id == member_id %}
+            <a class="text-muted font-weight-normal" href="https://twitter.com/{{j.twitter_handle}}?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@{{j.twitter_handle}}
+            </a>
+          </h4>
+      {% endif %}
+    {% endfor %}
+          <div class="text-muted mb-2">{{i.party}} | {{i.state}}</div>
+        </div>
+      </div>
+            <div class="card mb-4">
+              <div class="card-body">
+                <table class="table user-view-table m-0">
+                  <tbody>
+                    <tr>
+                      <td>Website:</td>
+                        <td>
+                          <a class="" href="{{i.url}}">{{i.url}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td>Verified:</td>
+                      <td><span class="fa fa-check text-primary"></span>&nbsp; Yes</td>
+                    </tr>
+                    <tr>
+                      <td>Party:</td>
+                      <td>{{'Democratic' if i.party == 'D' else 'Independent' if i.party == 'ID' else 'Republican'}}</td>
+                    </tr>
+                    <tr>
+                      <td>Votes with Party:</td>
+                      <td>{{i.votes_w_party}}%</td>
+                    </tr>
+                    <tr>
+                      <td>Votes against Party:</td>
+                      <td>{{i.votes_against_party}}%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+    {% endif %}
+  {% endfor %}
+            <hr class="border-light m-0">
+              <div class="table-responsive">
+                <table class="table card-table m-0">
+                  <tbody>
+                    <tr>
+                      <th>Committees</th>
+                    </tr>
+                {% for i in are_part_of %}
+                  {% if i.member_id == member_id %}
+                    <tr>
+                      <td>
+                        <a href="{{url_for('individual_committee', committee_id=i.committee_id)}}">
+                        {% for j in committee %}
+                          {% if j.id == i.committee_id %}
+                            {{j.name}}
+                            {% if j.id == i.committee_id and j.chair_id == member_id %}
+                              (Chair)
+                            {% endif %}
+                            {% if j.id == i.committee_id and j.ranking_id == member_id %}
+                              (Ranking Member)
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                        </a>
+                      </td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+              <div class="card mb-4">
+                <div class="row no-gutters row-bordered">
+
+  {% for i in twitter %}
+    {% if i.member_id == member_id %}
+                  <div class="d-flex col-md align-items-center">
+                    <a class="card-body d-block text-body">
+                      <div class="text-muted small line-height-1">Tweets</div>
+                      <div class="text-xlarge">{{i.number_tweets}}</div>
+                    </a>
+                  </div>
+                  <div class="d-flex col-md align-items-center">
+                    <a class="card-body d-block text-body">
+                      <div class="text-muted small line-height-1">Followers</div>
+                      <div class="text-xlarge">{{i.number_followers}}</div>
+                    </a>
+                  </div>
+                  <div class="d-flex col-md align-items-center">
+                    <a class="card-body d-block text-body">
+                      <div class="text-muted small line-height-1">Following</div>
+                      <div class="text-xlarge">{{i.number_following}}</div>
+                    </a>
+                  </div>
+                </div>
+                <hr class="border-light m-0">
+                <div class="card-body">
+    {% endif %}
+  {% endfor %}
+  {% for i in member %}
+    {% if i.id == member_id %}
+                <table class="table user-view-table m-0">
+                <h6 class="mt-4 mb-3">Contacts</h6>
+
+                <table class="table user-view-table m-0">
+                  <tbody>
+                    <tr>
+                      <td>Phone:</td>
+                      <td>{{i.phone}}</td>
+                    </tr>
+                    <tr>
+                      <td>Mail:</td>
+                      <td>{{i.mailing_address}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </table>
+              </div>
+            </div>
+    {% endif %}
+  {% endfor %}
+
+            <div class="card mb-4">
+              <button class="btn btn-outline-primary btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLeg" aria-expanded="false" aria-controls="collapseLeg">
+                View Legislative Activity
+              </button>
+              <div class="collapse" id="collapseLeg">
+                <div class="row no-gutters row-bordered">
+                  <div class="d-flex col-md align-items-center">
+                    <a class="card-body d-block text-body">
+                      <div class="text-large">Legislative Activity</div>
+                    </a>
+                    <div class="table-responsive">
+                      <table class="table card-table m-0">
+                        <tbody>
+                        {% for i in legislation %}
+                          {% if i.sponsor_id == member_id %}
+                          <tr>
+                            <td>
+                              <p>
+                                <h6><a href="{{url_for('individual_legislation', bill_id=i.bill_id)}}">{{i.bill_number}}</a></h6>
+                                <br>
+                                {{i.summary}}
+                                <br>
+                                <br>
+                                Introduced: {{i.date_introduced}}
+                              </p>
+                            </td>
+                          </tr>
+                          {% endif %}
+                        {% endfor %}
+                          <tr>
+                            <td>
+                              <a href="{{url_for('legislation')}}">Click here to view more</a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <button class="btn btn-outline-primary btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwitter" aria-expanded="false" aria-controls="collapseTwitter">
+                View Recent Tweets
+              </button>
+              <div class="collapse" id="collapseTwitter">
+                {% for i in twitter %}
+                  {% if i.member_id == member_id %}
+                      <p>
+                        <br>
+                        {{i.timeline_html|safe}}
+                        <br>
+                      </p>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <button class="btn btn-outline-primary btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFin" aria-expanded="false" aria-controls="collapseFin">
+                View Financial Contributors
+              </button>
+              <div class="collapse" id="collapseFin">
+                <div class="row no-gutters row-bordered">
+                  <div class="d-flex col-md align-items-center">
+                    <a class="card-body d-block text-body">
+                      <div class="text-large">Financial Contributors</div>
+                    </a>
+                    <div class="table-responsive">
+                      <table class="table card-table m-0">
+                        <tbody>
+                          {% for i in financial %}
+                            {% if i.member_id == member_id %}
+                              {% set crp_id = i.crp_id %}
+                                <tr>
+                                  <td>
+                                    <br>
+                                    <h6 style="color:blue;">Industry Contributors</h6>
+                                    <br>
+                                  </td>
+                                </tr>
+                                {% for j in industry_contributor %}
+                                  {% if j.crp_id == crp_id %}
+                                  <tr>
+                                    <td>
+                                      <p>
+                                        <h6>{{j.industry_name}}</h6>
+                                        <br>
+                                        Contribution: ${{j.total}}
+                                      </p>
+                                    </td>
+                                  </tr>
+                                  {% endif %}
+                                {% endfor %}
+                                <tr>
+                                  <td>
+                                    <br>
+                                    <h6 style="color:blue;">Organization Contributors</h6>
+                                    <br>
+                                  </td>
+                                </tr>
+                                {% for j in organization_contributor %}
+                                  {% if j.crp_id == crp_id %}
+                                  <tr>
+                                    <td>
+                                      <p>
+                                        <h6>{{j.org_name}}</h6>
+                                        <br>
+                                        Contribution: ${{j.total}}
+                                      </p>
+                                    </td>
+                                  </tr>
+                                  {% endif %}
+                                {% endfor %}
+                                <tr>
+                                  <td>
+                                    <br>
+                                    <h6 style="color:blue;">Sector Contributors</h6>
+                                    <br>
+                                  </td>
+                                </tr>
+                                {% for j in sector_contributor %}
+                                  {% if j.crp_id == crp_id %}
+                                  <tr>
+                                    <td>
+                                      <p>
+                                        <h6>{{j.sector_name}}</h6>
+                                        <br>
+                                        Contribution: ${{j.total}}
+                                      </p>
+                                    </td>
+                                  </tr>
+                                  {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                          {% endfor %}
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="bg-light text-center align-middle">
+            <div class="row">
+              <p class="col">Last Edited: <script>document.write(document.lastModified);</script></p>
+              <p class="col">Created by Andrew Kim, Alina Mawji, Michael DiLeo, and Robert Everson</p>
+              <p class="col"><a href="https://gitlab.com/alinamawji/cs331e-idb" target="_blank" style="text-decoration: underline">GitLab Repository</a></p>
+            </div>
+          </footer>
+        </body>
+        </html>

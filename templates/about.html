@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Style content CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+    <!-- Font -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+
+    <!-- Local stylesheet elements -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='about.css') }}">
+
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static',filename='images/favicon.png') }}"/>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-md navbar-toggleable-sm navbar-light bg-light static-top">
+        <a class="navbar-brand" href="{{url_for('index')}}">CongressCentral</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('index')}}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('members')}}">Members</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('committees')}}">Committees</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('legislation')}}">Legislation</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('about')}}">About</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0" action="{{url_for('index')}}" method="POST">
+              <input type="search" id="input" class="form-control mr-sm-2" placeholder="Search" name="user_input">
+              <input type="submit" id="searchbuttonid" class="btn btn-outline-success my-2 my-sm-0" value="Search" name="action"></input>
+          </form>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1 class="display-4">About Us</h1>
+        <p>Information on our team and the development of this site</p>
+    </div>
+
+    <!-- Personal Cards -->
+    <div class="card-deck justify-content-center mx-5">
+        <div class="card">
+            <div class="card-body">
+                <img class="img-fluid img-thumbnail" src="{{ url_for('static',filename='images/andrew.jpg') }}" alt="Andrew Picture"> <br/>
+                <h3 class="card-title text-center">Andrew Kim</h3>
+                <h5 class="card-subtitle text-center text-muted">Back-end Developer</h5> <br/>
+                <h6 class="card-subtitle text-center text-muted">Senior Mathematics Major</h6> <br/>
+                <p class="card-text">Interested in deep learning and machine learning Engineer or researcher. Video gamer, gym-goer, and dog lover.</p>
+                <a href="https://www.cs.utexas.edu/~akim94/" style="color:blue" target="_blank">cs.utexas.edu/~akim94/</a><br><br>
+                <a href="https://www.linkedin.com/in/andantekim/" style="color:blue" target="_blank">linkedin.com/in/andantekim/</a><br>
+            </div>
+            <div class="card-footer text-center">
+                <p>24 Commits</p>
+                <hr/>
+                <p>5 Issues</p>
+                <hr/>
+                <p>25 Unit Tests</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <img class="img-fluid img-thumbnail" src="{{ url_for('static',filename='images/alina.png') }}" alt="Alina Picture"> <br/>
+                <h3 class="card-title text-center">Alina Mawji</h3>
+                <h5 class="card-subtitle text-center text-muted">Full-stack Developer <br/>& Team Leader</h5> <br/>
+                <h6 class="card-subtitle text-center text-muted">Senior Nutrition Major</h6> <br/>
+                <p class="card-text">Aspiring machine learning engineer or data scientist. Volunteer, fitness enthusiast, and cat lover.</p>
+                <a href="https://www.cs.utexas.edu/~alina/" style="color:blue;" target="_blank">cs.utexas.edu/~alina/</a><br><br>
+                <a href="https://www.linkedin.com/in/alina-mawji" style="color:blue" target="_blank">linkedin.com/in/alina-mawji/</a>
+            </div>
+            <div class="card-footer text-center">
+                <p>54 Commits</p>
+                <hr/>
+                <p>30 Issues</p>
+                <hr/>
+                <p>10 Unit Tests</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <img class="img-fluid img-thumbnail" src="{{ url_for('static',filename='images/michael.png') }}" alt="Michael Picture"> <br/>
+                <h3 class="card-title text-center">Michael DiLeo</h3>
+                <h5 class="card-subtitle text-center text-muted">Full-stack Developer</h5> <br/>
+                <h6 class="card-subtitle text-center text-muted">Senior Biology Major</h6> <br/>
+                <p class="card-text">Premed student interested in website developement. Rower, cyclist, chess enthusiast, and fellow cat lover.</p>
+                <a href="https://www.cs.utexas.edu/~mjdileo/" style="color:blue" target="_blank">cs.utexas.edu/~mjdileo/</a><br><br>
+                <a href="https://www.linkedin.com/in/michael-dileo-718a37180" style="color:blue" target="_blank">linkedin.com/in/michael-dileo</a><br>
+            </div>
+            <div class="card-footer text-center">
+                <p>29 Commits</p>
+                <hr/>
+                <p>27 Issues</p>
+                <hr/>
+                <p>10 Unit Tests</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <img class="img-fluid img-thumbnail" src="{{ url_for('static',filename='images/robert.JPG') }}" alt="Robert Picture"> <br/>
+                <h3 class="card-title text-center">Robert Everson</h3>
+                <h5 class="card-subtitle text-center text-muted">Back-end Developer & GCP</h5> <br/>
+                <h6 class="card-subtitle text-center text-muted">Junior Economics Major</h6> <br/>
+                <p class="card-text">Passionate software developer focusing on Dev-Ops and cyber security.</p>
+                <a href="https://www.cs.utexas.edu/~teverson/" style="color:blue" target="_blank">cs.utexas.edu/~teverson/</a><br><br>
+                <a href="https://www.linkedin.com/in/treyeverson/" style="color:blue" target="_blank">linkedin.com/in/treyeverson/</a><br>
+            </div>
+            <div class="card-footer text-center">
+                <p>31 Commits</p>
+                <hr/>
+                <p>2 Issues</p>
+                <hr/>
+                <p>10 Unit Tests</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Icons Grid -->
+    <section class="features-icons text-center text-dark">
+        <div class="container bg-light">
+            <div class="header bg-light">
+                <h1 class="text-dark">Repository Info</h1>
+                <p class="text-dark">Stats and links to our gitlab repository, visit our <a href="https://gitlab.com/alinamawji/cs331e-idb/-/wikis/home" target="_blank" style="text-decoration: underline">wiki</a> to learn more</p>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <a href="https://gitlab.com/alinamawji/cs331e-idb/-/tree/master" target="_blank">
+                        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fas fa-code-branch m-auto text-dark"></i>
+                            </div>
+                            <h1>138</h1>
+                            <h3 class="lead mb-0">Commits</h3>
+                            <br/>
+                            <p class="text-muted">To our Repository</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="https://gitlab.com/alinamawji/cs331e-idb/-/issues" target="_blank">
+                        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fas fa-bug m-auto text-dark"></i>
+                            </div>
+                            <h1>64</h1>
+                            <h3 class="lead mb-0">Issues</h3>
+                            <br/>
+                            <p class="text-muted">Completed in our Issue Tracker</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a data-toggle="modal" href="#testsModal" role="button" aria-expanded="false" aria-controls="testsModal">
+                        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fas fa-code m-auto text-dark"></i>
+                            </div>
+                            <h1>55</h1>
+                            <h3 class="lead mb-0">Unit Tests</h3>
+                            <br/>
+                            <p class="text-muted">Successfuly implemented, click to run locally</p>
+                        </div>
+                    </a>
+                    <div class="modal fade" id="testsModal" tabindex="-1" role="dialog" aria-labelledby="testsModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="testsModalLabel">Unit Test Results</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="card">
+                              <img src="{{ url_for('static',filename='images/unittests.png')}}" class="card-img-top" alt="...">
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+
+            <div class="header bg-light">
+                <h1 class="text-dark">Our Tools and Data</h1>
+                <p class="text-dark">What we used to build our site</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col">
+                    <a href="https://getbootstrap.com/" target="_blank">
+                        <div class="features-icons-item-sm mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="bi bi-bootstrap-fill m-auto text-dark"></i>
+                            </div>
+                            <h5 class="lead mb-0">Bootstrap</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://flask.palletsprojects.com/en/1.1.x/" target="_blank">
+                        <div class="features-icons-item-sm mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fab fa-python m-auto text-dark"></i>
+                            </div>
+                            <h5 class="lead mb-0">Flask</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://gitlab.com/" target="_blank">
+                        <div class="features-icons-item-sm mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fab fa-gitlab m-auto text-dark"></i>
+                            </div>
+                            <h5 class="lead mb-0">Gitlab</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://cloud.google.com/" target="_blank">
+                        <div class="features-icons-item-sm mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fab fa-google m-auto text-dark"></i>
+                            </div>
+                            <h5 class="lead mb-0">Google Cloud Platform</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <br/>
+            <div class="header bg-light">
+                <p class="text-dark">Data sourced from</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col">
+                    <a href="https://www.senate.gov/" target="_blank">
+                        <div class="features-icons-item-sm mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fas fa-flag-usa m-auto text-dark"></i>
+                            </div>
+                            <h5 class="lead mb-0">Official Senate Site</h5>
+                            <p>Information on senators and committees</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://www.opensecrets.org/open-data/api-documentation" target="_blank">
+                        <div class="features-icons-item-sm mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fas fa-eye m-auto text-dark"></i>
+                            </div>
+                            <h5 class="lead mb-0">Open Secrets API</h5>
+                            <p>Information on senator financial information</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://projects.propublica.org/api-docs/congress-api/" target="_blank">
+                        <div class="features-icons-item-sm mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fas fa-book m-auto text-dark"></i>
+                            </div>
+                            <h5 class="lead mb-0">Propublica Congress API</h5>
+                            <p>Information on committees, legislation, and current senators</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="https://developer.twitter.com/en/docs/twitter-api/v1" target="_blank">
+                        <div class="features-icons-item-sm mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="fab fa-twitter m-auto text-dark"></i>
+                            </div>
+                            <h5 class="lead mb-0">Twitter API</h5>
+                            <p>Individual senator twitter statistics and recent tweets</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <br/>
+
+            <div class="header bg-light">
+                <h1 class="text-dark">Speaker Deck</h1>
+                <p class="text-dark">Check out our Speaker Deck presentation</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col">
+                    <a href="https://speakerdeck.com/alinamawji/congresscentral-presentation">
+                        <div class="mx-auto mb-0 mb-lg-3">
+                            <div class="center features-icons-icon">
+                                <span class="iconify" data-icon="fa-brands:speaker-deck" data-inline="true" data-width="10em" data-height="10em"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <br/>
+
+        </div>
+    </section>
+    <footer class="bg-light text-center align-middle">
+    <div class="row">
+      <p class="col">Last Edited: <script>document.write(document.lastModified);</script></p>
+      <p class="col">Created by Andrew Kim, Alina Mawji, Michael DiLeo, and Robert Everson</p>
+      <p class="col"><a href="https://gitlab.com/alinamawji/cs331e-idb" target="_blank" style="text-decoration: underline">GitLab Repository</a></p>
+    </div>
+  </footer>
+</body>
+</html>
